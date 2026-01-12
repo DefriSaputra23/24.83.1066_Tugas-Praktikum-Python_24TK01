@@ -13,14 +13,14 @@ def keliling_segitiga(a, b, c):
     return a + b + c
 
 def keliling_persegi_panjang(p, l):
-    return 2 * (p * l)
+    return 2 * (p + l)
 
 def keliling_jajar_genjang(a, b):
-    return 2 *(a +b)
+    return 2 * (a + b)
 
 hitungLuas = {
     "Luas Segitiga": {
-        "fungsi": luas_segitiga,
+        "Fungsi": luas_segitiga,
         "Inputan": ['Alas', 'Tinggi']
     },
     "Luas Persegi Panjang": {
@@ -48,6 +48,16 @@ hitungKeliling = {
     }
 }
 
+def pilih_rumus(option):
+    allRumus = {}
+
+    if (option == 'Hitung Luas'):
+        allRumus = hitungluas
+    else:
+        allrumus =hitungKeliling
+
+    return allrumus
+
 st.title("Aplikasi Hitung Bangun Datar")
 
 opt = st.selectbox(
@@ -62,16 +72,6 @@ pilih_hitung = st.radio(
     options=all_rumus.keys(),
     horizontal=True
 )
-
-def pilih_rumus(option):
-    allRumus = {}
-
-    if (option == 'Hitung Luas'):
-        allRumus = hitungluas
-    else:
-        allrumus =hitungKeliling
-
-    return allrumus
 
 inputs = [st.number_input(label, value=0.0) for label in all_rumus[pilih_hitung]["Inputan"]]
 
