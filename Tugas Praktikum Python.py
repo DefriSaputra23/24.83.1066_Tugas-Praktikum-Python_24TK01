@@ -1,74 +1,81 @@
 import streamlit as st
 
-def luas_persegi(sisi):
-    return sisi * sisi
+def luas_segitiga(a, t):
+    return (a * t) / 2
 
-def luas_persegi_panjang(panjang, lebar):
-    return panjang * lebar
+def luas_persegi_panjang(p, l):
+    return p * l
 
-def luas_lingkaran(jari_jari):
-    return 3.14 * jari_jari * jari_jari
+def jajar_genjang(a, t):
+    return a * t
 
-def keliling_persegi(sisi):
-    return 4 * sisi
+def keliling_segitiga(a, b, c):
+    return a + b + c
 
-def keliling_persegi_panjang(panjang, lebar):
-    return 2 * (panjang + lebar)
+def keliling_persegi_panjang(p, l):
+    return 2 * (p * l)
 
-def keliling_lingkaran(jari_jari):
-    return 2 * 3.14 * jari_jari
+def keliling_jajar_genjang(a, b):
+    return 2 *(a +b)
 
-rumus_luas = {
-    "Persegi": luas_persegi,
-    "Persegi Panjang": luas_persegi_panjang,
-    "Lingkaran": luas_lingkaran
+hitungLuas = {
+    "Luas Segitiga": {
+        "fungsi": luas_segitiga,
+        "Inputan": ['Alas', 'Tinggi']
+    },
+    "Luas Persegi Panjang": {
+        "Fungsi": luas_persegi_panjang,
+        "Inputan": ['Panjang', 'Lebar']
+    },
+    "Luas Jajar Genjang": {
+        "Fungsi": luas_jajar_genjang,
+        "Inputan": ['Alas', 'Tinggi']
+    }
 }
 
-rumus_keliling = {
-    "Persegi": keliling_persegi,
-    "Persegi Panjang": keliling_persegi_panjang,
-    "Lingkaran": keliling_lingkaran
+hitungKeliling = {
+    "Keliling Segitiga": {
+        "Fungsi": keliling_segitiga,
+        "Inputan": ['sisi A', 'Sisi B', 'Sisi C']
+    },
+    "Keliling Persegi Panjang": {
+        "Fungsi": keliling_persegi_panjang,
+        "Inputan": ['Panjang', 'Lebar']
+    },
+    "Keliling Jajar Genjang": {
+        "Fungsi": keliling_jajar_genjang,
+        "inputan": ['Sisi A', 'Sisi B']
+    }
 }
 
-st.title("Hitung Luas dan Keliling Bangun Datar")
+st.title("Aplikasi Hitung Bangun Datar")
 
-pilihan = st.selectbox(
-    "Pilih operasi perhitungan:",
-    ["Luas", "Keliling"]
+opt = st.selectbox(
+    label="Pilih operasi perhitungan",
+    options=['Hitung Luas', 'Hitung Keliling']
 )
 
-def pilih_rumus(pilihan):
-    if pilihan == "Luas":
-        return rumus_luas
+all_rumus = pilih_rumus(opt)
+
+pilih_hitung = st.radio(
+    label='pilih hitung',
+    options=all_rumus.keys(),
+    horizontal=True
+)
+
+def pilih_rumus(option)
+    allRumus = {}
+
+    if (option == 'Hitung Luas'):
+        allRumus = hitungluas
     else:
-        return rumus_keliling
+        allrumus =hitungKeliling
 
-rumus = pilih_rumus(pilihan)
+    return allrumus
 
-bangun_datar = st.radio(
-    "Pilih bangun datar:",
-    list(rumus.keys())
-)
+inputs = [st.number_input(label, value=0.0) for label in all_rumus[pilih_hitung]["Inputan"]]
 
-if bangun_datar == "Persegi":
-    sisi = st.number_input("Masukkan sisi")
-
-elif bangun_datar == "Persegi Panjang":
-    panjang = st.number_input("Masukkan panjang")
-    lebar = st.number_input("Masukkan lebar")
-
-elif bangun_datar == "Lingkaran":
-    jari_jari = st.number_input("Masukkan jari-jari")
-
-if st.button("Hitung"):
-    if bangun_datar == "Persegi":
-        hasil = rumus[bangun_datar](sisi)
-
-    elif bangun_datar == "Persegi Panjang":
-        hasil = rumus[bangun_datar](panjang, lebar)
-
-    elif bangun_datar == "Lingkaran":
-        hasil = rumus[bangun_datar](jari_jari)
-
-    st.markdown(f"### Hasil Perhitungan: **{hasil}**")
-
+if st.button('Hitung'):
+    hasil = all_rumus[pilih_hitung]["Fungsi"](*inputs)
+    st.markdown(f'<h2 style="color:green; text-align:center;">Hasil: {hasil}</h2',
+                unsafe_allow_html=True)
