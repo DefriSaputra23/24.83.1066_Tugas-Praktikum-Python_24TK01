@@ -63,7 +63,7 @@ pilih_hitung = st.radio(
     horizontal=True
 )
 
-def 'pilih_rumus'(option)
+def pilih_rumus(option):
     allRumus = {}
 
     if (option == 'Hitung Luas'):
